@@ -35,10 +35,10 @@ app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
-        let sender = event.sender.id
+        let senderID = event.sender.id
         var message = event.message;
 
-        var messageId = message.mid;
+        var messageId = message.id;
 
         var messageText = message.text;
         var messageAttachments = message.attachments;
@@ -49,16 +49,16 @@ app.post('/webhook/', function (req, res) {
         // and send back the example. Otherwise, just echo the text we received.
         switch (messageText) {
           case 'generic':
-          sendGenericMessage(sender);
+          sendGenericMessage(senderID);
           case 'yu baina':
-            sendTextMessage(sender, "yumgui de chamaar yu baina");
+            sendTextMessage(senderID, "yumgui de chamaar yu baina");
           break;
 
           default:
-          sendTextMessage(sender, messageText);
+          sendTextMessage(senderID, messageText);
          }
         } else if (messageAttachments) {
-            sendTextMessage(sender, "Message with attachment received");
+            sendTextMessage(senderID, "Message with attachment received");
         } 
         else if (messagingEvent.postback) {
           receivedPostback(messagingEvent); 

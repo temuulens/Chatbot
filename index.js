@@ -36,17 +36,32 @@ app.post('/webhook/', function (req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
-        if (event.message && event.message.text) {
-            let text = event.message.text
-            if(text == "yu baina"){
-                sendTextMessage(sender, "yumgui de chamaar yu baina")
-            } else if (text == "generic"){
-                sendGenericMessage(sender)
-            }
-            else{
-                sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))  
-            }
-        }
+        var message = event.message;
+
+        var messageId = message.mid;
+
+        var messageText = message.text;
+        var messageAttachments = message.attachments;
+
+        if (messageText) {
+
+        // If we receive a text message, check to see if it matches a keyword
+        // and send back the example. Otherwise, just echo the text we received.
+        switch (messageText) {
+          case 'generic':
+          sendGenericMessage(senderID);
+          case 'yu baina':
+            sendTextMessage(sender, "yumgui de chamaar yu baina");
+          break;
+
+          default:
+          sendTextMessage(senderID, messageText);
+         }} else if (messageAttachments) {
+            sendTextMessage(senderID, "Message with attachment received");
+        } else if (messagingEvent.postback) {
+          receivedPostback(messagingEvent); 
+      }
+
     }
     res.sendStatus(200)
 })
@@ -139,4 +154,21 @@ function sendGenericMessage(recipientId) {
   };  
 
   callSendAPI(messageData);
+}
+
+function receivedPostback(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+  var timeOfPostback = event.timestamp;
+
+  // The 'payload' param is a developer-defined field which is set in a postback 
+  // button for Structured Messages. 
+  var payload = event.postback.payload;
+
+  console.log("Received postback for user %d and page %d with payload '%s' " + 
+    "at %d", senderID, recipientID, payload, timeOfPostback);
+
+  // When a postback is called, we'll send a message back to the sender to 
+  // let them know it was successful
+  sendTextMessage(senderID, "Postback called");
 }

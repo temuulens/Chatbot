@@ -38,7 +38,7 @@ app.post('/webhook/', function (req, res) {
         let senderID = event.sender.id
         var message = event.message;
 
-        var messageId = message.id;
+        // var messageId = message.mid;
 
         var messageText = message.text;
         var messageAttachments = message.attachments;

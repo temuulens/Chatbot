@@ -49,16 +49,18 @@ app.post('/webhook/', function (req, res) {
         // and send back the example. Otherwise, just echo the text we received.
         switch (messageText) {
           case 'generic':
-          sendGenericMessage(senderID);
+          sendGenericMessage(sender);
           case 'yu baina':
             sendTextMessage(sender, "yumgui de chamaar yu baina");
           break;
 
           default:
-          sendTextMessage(senderID, messageText);
-         }} else if (messageAttachments) {
-            sendTextMessage(senderID, "Message with attachment received");
-        } else if (messagingEvent.postback) {
+          sendTextMessage(sender, messageText);
+         }
+        } else if (messageAttachments) {
+            sendTextMessage(sender, "Message with attachment received");
+        } 
+        else if (messagingEvent.postback) {
           receivedPostback(messagingEvent); 
       }
 

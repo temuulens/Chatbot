@@ -120,7 +120,7 @@ function sendRssFeed(sender){
         console.log(item.description);
         var messageData = {
                 recipient: {
-                    id: recipientId
+                    id: sender
                 },
                 message: {
                     attachment: {

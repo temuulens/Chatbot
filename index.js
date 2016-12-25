@@ -108,16 +108,61 @@ function receivedMessage(event) {
 
 function sendRssFeed(sender){
 
-    http.get('http://www.npr.org/rss/rss.php?id=1001', function(res) {
+    http.get('http://news.gogo.mn/feed', function(res) {
     var parser = new FeedMe();
-      parser.on('title', function(title) {
-        console.log('title of feed is', title);
-        sendTextMessage(sender, title)
-      });
+      // parser.on('title', function(title) {
+      //   console.log('title of feed is', title);
+      //   sendTextMessage(sender, title)
+      // });
       parser.on('item', function(item) {
         console.log();
         console.log('news:', item.title);
         console.log(item.description);
+        var messageData = {
+                recipient: {
+                    id: recipientId
+                },
+                message: {
+                    attachment: {
+                        type: "template",
+                        payload: {
+                            template_type: "generic",
+                            elements: [{
+                                title: item.title,
+                                subtitle: item.author,
+                                item_url: "https://www.oculus.com/en-us/rift/",
+                                image_url: "http://messengerdemo.parseapp.com/img/rift.png",
+                                buttons: [{
+                                    type: "web_url",
+                                    url: item.link,
+                                    title: "Open Web URL"
+                                }, {
+                                    type: "postback",
+                                    title: "Call Postback",
+                                    payload: "Payload for first bubble",
+                                }],
+                            }, {
+                                title: "touch",
+                                subtitle: "Your Hands, Now in VR",
+                                item_url: "https://www.oculus.com/en-us/touch/",
+                                image_url: "http://messengerdemo.parseapp.com/img/touch.png",
+                                buttons: [{
+                                    type: "web_url",
+                                    url: "https://www.oculus.com/en-us/touch/",
+                                    title: "Open Web URL"
+                                }, {
+                                    type: "postback",
+                                    title: "Call Postback",
+                                    payload: "Payload for second bubble",
+                                }]
+                            }]
+                        }
+                    }
+                }
+            };
+
+        callSendAPI(messageData);
+
       });
       res.pipe(parser);
     });

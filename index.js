@@ -4,6 +4,9 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
+var FeedMe = require('feedme');
+var http = require('http');
+
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -91,13 +94,34 @@ function receivedMessage(event) {
             case 'yu baina':
                 sendTextMessage(senderID, "yumgui de chamaar yu baina");
                 break;
-
+            case 'rss':
+                sendRssFeed(snederID);
+                break;
             default:
                 sendTextMessage(senderID, messageText);
         }
     } else if (messageAttachments) {
         sendTextMessage(senderID, "Message with attachment received");
     }
+}
+
+
+function sendRssFeed(sender){
+
+    http.get('http://www.npr.org/rss/rss.php?id=1001', function(res) {
+    var parser = new FeedMe();
+      parser.on('title', function(title) {
+        console.log('title of feed is', title);
+        sendTextMessage(sender, title)
+      });
+      parser.on('item', function(item) {
+        console.log();
+        console.log('news:', item.title);
+        console.log(item.description);
+      });
+      res.pipe(parser);
+    });
+
 }
 
 

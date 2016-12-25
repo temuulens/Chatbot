@@ -95,7 +95,7 @@ function receivedMessage(event) {
                 sendTextMessage(senderID, "yumgui de chamaar yu baina");
                 break;
             case 'rss':
-                sendRssFeed(snederID);
+                sendRssFeed(senderID);
                 break;
             default:
                 sendTextMessage(senderID, messageText);

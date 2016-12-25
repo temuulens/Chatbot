@@ -155,10 +155,11 @@ function sendRssFeed(sender){
 
         messageData.message.attachment.payload.elements.push(element);
 
+         callSendAPI(messageData);
+
 
 
       });
-    callSendAPI(messageData);
     res.pipe(parser);
     });
 

@@ -113,15 +113,19 @@ function sendWeatherInfo(sender){
 
     var YQL = require('yql');
 
-    var query = new YQL('select * from weather.forecast where (location = 2266535)');
+    new YQL.exec("SELECT * FROM weather.forecast WHERE (location = @zip)", function(response) {
 
-    query.exec(function(err, data) {
-      var location = data.query.results.channel.location;
-      var condition = data.query.results.channel.item.condition;
-      
-      sendTextMessage(sender, 'The current weather in ' + location.city + ', ' + location.region + ' is ' + condition.temp + ' degrees.');
-      console.log('The current weather in ' + location.city + ', ' + location.region + ' is ' + condition.temp + ' degrees.');
-    });
+    if (response.error) {
+        console.log("Example #1... Error: " + response.error.description);
+    }
+    else {
+        var location  = response.query.results.channel.location,
+            condition = response.query.results.channel.item.condition;
+        console.log("Example #1... The current weather in " + location.city + ', ' + location.region + " is " + condition.temp + " degrees and " + condition.text);
+        sendTextMessage(sender, 'The current weather in ' + location.city + ', ' + location.region + ' is ' + condition.temp + ' degrees.');
+    }
+
+    }, {"zip": 94089});
 
 }
 

@@ -113,12 +113,12 @@ function sendWeatherInfo(sender){
 
    
     var request = require('request');
-    request('http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=bc3af3308341c2169a2e8d146ada67ea', function (error, response, body) {
+    request('http://api.openweathermap.org/data/2.5/weather?q=London,uk&units=metric&appid=bc3af3308341c2169a2e8d146ada67ea', function (error, response, body) {
         if (!error && response.statusCode == 200) {
           var info = JSON.parse(body)
           var description = info.weather.description;
           var temprature = info.main.temp;
-            sendTextMessage(sender, "Temprature: " + temprature + " description: "+ description);
+            sendTextMessage(sender, "Weather on: Ulaanbaatar" + "Temprature: " + temprature + "c" + " description: "+ description);
 
         }
     })

@@ -111,21 +111,18 @@ function receivedMessage(event) {
 
 function sendWeatherInfo(sender){
 
-    var YQL = require('yql');
+   
+    var request = require('request');
+    request('http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=bc3af3308341c2169a2e8d146ada67ea', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          var info = JSON.parse(body)
+          var description = info.weather.description;
+          var temprature = info.main.temp;
+            sendTextMessage(sender, "Temprature: " + temprature + " description: "+ description);
 
-    new YQL.exec("SELECT * FROM weather.forecast WHERE (location = @zip)", function(response) {
+        }
+    })
 
-    if (response.error) {
-        console.log("Example #1... Error: " + response.error.description);
-    }
-    else {
-        var location  = response.query.results.channel.location,
-            condition = response.query.results.channel.item.condition;
-        console.log("Example #1... The current weather in " + location.city + ', ' + location.region + " is " + condition.temp + " degrees and " + condition.text);
-        sendTextMessage(sender, 'The current weather in ' + location.city + ', ' + location.region + ' is ' + condition.temp + ' degrees.');
-    }
-
-    }, {"zip": 94089});
 
 }
 

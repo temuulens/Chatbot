@@ -97,6 +97,9 @@ function receivedMessage(event) {
             case 'rss':
                 sendRssFeed(senderID);
                 break;
+            case 'weather':
+                sendWeatherInfo(senderID);
+                break;
             default:
                 sendTextMessage(senderID, messageText);
         }
@@ -106,10 +109,27 @@ function receivedMessage(event) {
 }
 
 
+function sendWeatherInfo(sender){
+
+    var YQL = require('yql');
+
+    var query = new YQL('select * from weather.forecast where (location = 2266535)');
+
+    query.exec(function(err, data) {
+      var location = data.query.results.channel.location;
+      var condition = data.query.results.channel.item.condition;
+      
+      sendTextMessage(sender, 'The current weather in ' + location.city + ', ' + location.region + ' is ' + condition.temp + ' degrees.');
+      console.log('The current weather in ' + location.city + ', ' + location.region + ' is ' + condition.temp + ' degrees.');
+    });
+
+}
+
+
 function sendRssFeed(sender){
 
     http.get('http://news.gogo.mn/feed', function(res) {
-    var parser = new FeedMe();
+    var parser = new FeedMe(true);
       // parser.on('title', function(title) {
       //   console.log('title of feed is', title);
       //   sendTextMessage(sender, title)
@@ -155,11 +175,8 @@ function sendRssFeed(sender){
 
         messageData.message.attachment.payload.elements.push(element);
 
-         callSendAPI(messageData);
-
-
-
       });
+
     res.pipe(parser);
     });
 

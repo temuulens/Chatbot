@@ -119,7 +119,7 @@ function sendAirQualityInfo(sender){
             var info = JSON.parse(body);
             for(var i = 0; i < info.length; i++) {
                 var obj = info[i];
-                sendTextMessage(sender, obj.name + "-д " + "Агаарын чанарын инекс : " + obj.aqiData.current + " байна");
+                sendTextMessage(sender, obj.name + "-д " + "Агаарын чанарын индекс : " + obj.aqiData.current + " байна");
             }
 
         }

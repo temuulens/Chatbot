@@ -100,12 +100,32 @@ function receivedMessage(event) {
             case 'weather':
                 sendWeatherInfo(senderID);
                 break;
+            case 'agaar':
+                sendAirQualityInfo(senderID);
+                break;
             default:
                 sendTextMessage(senderID, messageText);
         }
     } else if (messageAttachments) {
         sendTextMessage(senderID, "Message with attachment received");
     }
+}
+
+function sendAirQualityInfo(sender){
+
+    var request = require('request');
+    request('http://agaar.mn/aqdata/stationlist?period=h&language=mn', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var info = JSON.parse(body);
+            for(var i = 0; i < json.length; i++) {
+                var obj = json[i];
+                sendTextMessage(sender, obj.name + "-д" + "Агаарын чанарын инекс : " + obj.aqiData.current + " байна");
+            }
+
+        }
+    });
+
+
 }
 
 
@@ -122,7 +142,7 @@ function sendWeatherInfo(sender){
             sendTextMessage(sender, "Weather on: " + name + " " + "Temprature: " + temprature + "c" + " description: "+ description);
 
         }
-    })
+    });
 
 
 }

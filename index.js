@@ -206,7 +206,7 @@ function sendRssFeed(sender){
 
 
 
-const token = "EAAL7VJr82RkBAI7VhKh4aZA4yIimIQEw1jnSCLyO7PQUwPSBNzEnuMZBu8Dh9ahZBtmvqR0dMSN6RTqLtZBJDLj7HS0aj2R9wTCZAIWbL1SI12r0aKHJHZB69SZCnqJ8zJptsgZAcZA4YDZA31IsCJdkFWyX1oKZC0wGsdSXpgxEljjJgZDZD"
+const token = "EAAL7VJr82RkBACal0yqpaLZCOVH4Gv43PC3lif7AEIgLTC9tPHvFICQgBTFSBdY1yGNeZAVyR3JAY6Mg4lpvZBDpeTPG5BaMnRXnVZBi3IQmaqk4PciFoTnVbTM7Uq0O9jCqeU1ZBHexuoUNj648YDKVym9MssHWaEO1kW9lXngZDZD"
 
 function sendTextMessage(sender, text) {
     let messageData = {

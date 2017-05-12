@@ -251,11 +251,12 @@ function spellCheckText(sender, text) {
             var result = body.result;
             if (typeof result !== 'undefined' && result.length > 0) {
                 for(var i=0; i < result.length; i++){
-                    console.log(result[i])
+                    console.log(result[i]);
+                    sendTextMessage(sender, result[i]);
                 }
             }
 
-            // sendTextMessage(sender, body);
+            
             console.log(body);
         } else{
             console.error(error);

@@ -247,7 +247,14 @@ function spellCheckText(sender, text) {
 
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            // var result = JSON.parse(body)
+            // var res = JSON.parse(body);
+            var result = body.result;
+            if (typeof result !== 'undefined' && result.length > 0) {
+                for(var i=0; i < result.length; i++){
+                    console.log(result[i])
+                }
+            }
+
             // sendTextMessage(sender, body);
             console.log(body);
         } else{

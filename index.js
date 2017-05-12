@@ -247,8 +247,8 @@ function spellCheckText(sender, text) {
 
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            var result = JSON.parse(body)
-            sendTextMessage(sender, result);
+            // var result = JSON.parse(body)
+            sendTextMessage(sender, body);
         }
     });
 }

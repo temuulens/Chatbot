@@ -281,7 +281,7 @@ function requestSuggestion(sender, text){
             // var res = JSON.parse(body);
             var result = body.result;
             if (typeof result !== 'undefined' && result.length > 0) {
-                var returnString = "Алдаатай үг : " + text + " санал болгох: "
+                var returnString = "Алдаатай үг : " + text + " Cанал болгох: "
                 for(var i=0; i < result.length; i++){
                     returnString += result[i] + ", ";
                 }

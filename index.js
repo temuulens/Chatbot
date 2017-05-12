@@ -273,9 +273,7 @@ function requestSuggestion(text){
     var options = {
         uri: 'http://www.spellcheck.gov.mn/scripts/tiny_mce/plugins/spellchecker/rpc.php',
         method: 'POST',
-        json: {
-            "id": "c0", "method": "getSuggestions", "params": ["mn", [text]]
-        }
+        json: {"id":"c0","method":"getSuggestions","params":["mn",text]}
     };
 
     request(options, function (error, response, body) {

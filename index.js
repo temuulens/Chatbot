@@ -252,7 +252,8 @@ function spellCheckText(sender, text) {
             if (typeof result !== 'undefined' && result.length > 0) {
                 for(var i=0; i < result.length; i++){
                     console.log(result[i]);
-                    sendTextMessage(sender, result[i]);
+                    requestSuggestion(result[i])
+                    // sendTextMessage(sender, result[i]);
                 }
             }
 
@@ -262,7 +263,40 @@ function spellCheckText(sender, text) {
             console.error(error);
             console.error(response);
         }
-    });
+    }); 
+}
+
+
+function requestSuggestion(text){
+    var request = require('request');
+
+    var options = {
+        uri: 'http://www.spellcheck.gov.mn/scripts/tiny_mce/plugins/spellchecker/rpc.php',
+        method: 'POST',
+        json: {
+            "id": "c0", "method": "getSuggestions", "params": ["mn", [text]]
+        }
+    };
+
+    request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            // var res = JSON.parse(body);
+            var result = body.result;
+            if (typeof result !== 'undefined' && result.length > 0) {
+                var returnString = "Алдаатай үг : " + text + " санал болгох: "
+                for(var i=0; i < result.length; i++){
+                    returnString += result[i] + ", ";
+                }
+                sendTextMessage(sender, returnString);
+            }
+
+            console.log(body);
+        } else{
+            console.error(error);
+            console.error(response);
+        }
+    }); 
+
 }
 
 

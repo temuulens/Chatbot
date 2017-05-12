@@ -252,7 +252,7 @@ function spellCheckText(sender, text) {
             if (typeof result !== 'undefined' && result.length > 0) {
                 for(var i=0; i < result.length; i++){
                     console.log(result[i]);
-                    requestSuggestion(result[i])
+                    requestSuggestion(sender, result[i])
                     // sendTextMessage(sender, result[i]);
                 }
             }
@@ -267,7 +267,7 @@ function spellCheckText(sender, text) {
 }
 
 
-function requestSuggestion(text){
+function requestSuggestion(sender, text){
     var request = require('request');
 
     var options = {

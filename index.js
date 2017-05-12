@@ -104,7 +104,7 @@ function receivedMessage(event) {
                 sendAirQualityInfo(senderID);
                 break;
             default:
-                sendTextMessage(senderID, messageText);
+                spellCheckText(senderID, messageText);
         }
     } else if (messageAttachments) {
         sendTextMessage(senderID, "Message with attachment received");
@@ -232,6 +232,27 @@ function sendTextMessage(sender, text) {
         }
     })
 }
+
+
+function spellCheckText(sender, text) {
+    var request = require('request');
+
+    var options = {
+        uri: 'http://www.spellcheck.gov.mn/scripts/tiny_mce/plugins/spellchecker/rpc.php',
+        method: 'POST',
+        json: {
+            "id":"c0","method":"checkWords","params":["mn",[text]]
+        }
+    };
+
+    request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result = JSON.parse(body)
+            sendTextMessage(sender, result);
+        }
+    });
+}
+
 
 function callSendAPI(messageData) {
     request({

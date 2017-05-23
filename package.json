@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Temuulen",
@@ -13,5 +14,11 @@
     "express": "^4.14.0",
     "feedme": "^0.3.3",
     "request": "^2.79.0"
+  },
+  "now": {
+    "alias": "msngerbot.now.sh",
+    "env": {
+      "NODE_ENV": "production"
+    }
   }
 }

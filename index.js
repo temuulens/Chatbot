@@ -8,7 +8,7 @@ var FeedMe = require('feedme');
 var http = require('http');
 
 
-app.set('port', (process.env.PORT || 5000))
+app.set('port', (process.env.PORT || 3000))
 
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
@@ -20,7 +20,7 @@ app.use(bodyParser.json())
 
 // Index route
 app.get('/', function(req, res) {
-    res.send('Hello world, I am a chat bot')
+    res.send('Hello world, I am a chat bot with alias')
 })
 
 // for Facebook verification
@@ -31,10 +31,7 @@ app.get('/webhook/', function(req, res) {
     res.send('Error, wrong token')
 })
 
-// Spin up the server
-app.listen(app.get('port'), function() {
-    console.log('running on port', app.get('port'))
-})
+
 
 app.post('/webhook', function(req, res) {
     var data = req.body;
@@ -206,7 +203,7 @@ function sendRssFeed(sender){
 
 
 
-const token = "EAAL7VJr82RkBACal0yqpaLZCOVH4Gv43PC3lif7AEIgLTC9tPHvFICQgBTFSBdY1yGNeZAVyR3JAY6Mg4lpvZBDpeTPG5BaMnRXnVZBi3IQmaqk4PciFoTnVbTM7Uq0O9jCqeU1ZBHexuoUNj648YDKVym9MssHWaEO1kW9lXngZDZD"
+const token = "EAAEK604hQzkBANNbEnb6ccZBzDTZAyZAUHepj6pWcntdRupbjD4qfvZAdSQz5kmPAGIxQqWeqx4Wf4uxQQ6iJT9KXYgmBk8PdMe16qQ2VTnZBtQZAZAZBcBfR5LqU5gTMCpOOWS2jumZA5SBbPMiC35Pt9aAHhjSS5uvxAPQoTee3vAZDZD"
 
 function sendTextMessage(sender, text) {
     let messageData = {
@@ -385,3 +382,12 @@ function receivedPostback(event) {
     // let them know it was successful
     sendTextMessage(senderID, "Postback called");
 }
+
+function init() {
+    // Spin up the server
+    app.listen(app.get('port'), function() {
+        console.log('running on port', app.get('port'))
+    })
+}
+
+init();

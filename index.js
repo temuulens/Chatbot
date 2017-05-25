@@ -252,6 +252,8 @@ function spellCheckText(sender, text) {
                     requestSuggestion(sender, result[i])
                     // sendTextMessage(sender, result[i]);
                 }
+            } else{
+                sendTextMessage(sender, "Алдаатай үг олдсонгүй")
             }
 
             
@@ -259,6 +261,8 @@ function spellCheckText(sender, text) {
         } else{
             console.error(error);
             console.error(response);
+            sendTextMessage(sender, "Алдаа гарлаа")
+    
         }
     }); 
 }
